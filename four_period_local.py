@@ -1050,7 +1050,7 @@ ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节�
 </body>
 </html>"""
 
-    html_file = os.path.join(REPORT_DIR, f"ETF打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
+    html_file = os.path.join(REPORT_DIR, f"ETF四周期打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
     with open(html_file, "w", encoding="utf-8") as f:
         f.write(html)
     return html_file
@@ -1078,7 +1078,7 @@ def send_notification(results: list):
     buy = [r for r in successful if r["signal"] in ["强烈买入", "买入"]]
     sell = [r for r in successful if r["signal"] in ["强烈卖出", "卖出"]]
 
-    title = f"ETF打分 {datetime.now().strftime('%m-%d')} | 买{len(buy)} 卖{len(sell)}"
+    title = f"ETF四周期打分 {datetime.now().strftime('%m-%d')} | 买{len(buy)} 卖{len(sell)}"
 
     lines = [
         "ETF四周期量化打分报告",
