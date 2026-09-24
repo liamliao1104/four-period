@@ -28,7 +28,7 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: 运行ETF打分
+      - name: 运行ETF四周期打分
         env:
           PUSH_TYPE: ${{ secrets.PUSH_TYPE }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
@@ -42,5 +42,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add report/
-          git commit -m "ETF打分报告 $(date +'%Y%m%d_%H%M%S')" || echo "无新报告需要提交"
+          git commit -m "ETF四周期打分报告 $(date +'%Y%m%d_%H%M%S')" || echo "无新报告需要提交"
           git push
