@@ -52,10 +52,6 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 REPORT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report")
 os.makedirs(REPORT_DIR, exist_ok=True)
 
-# 数据缓存目录
-CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache")
-os.makedirs(CACHE_DIR, exist_ok=True)
-
 # 权重配置
 WEIGHTS = {
     "year": 0.25,   # 年K权重25%
@@ -77,44 +73,24 @@ WEIGHTS = {
 def fetch_etf_data(code: str, days: int = 365 * 5) -> pd.DataFrame:
     """
     获取ETF历史日K数据
-    返回: DataFrame with columns [date, open, close, high, low, volume, amount]
+    返回: (DataFrame, data_end_date_str) 或 (空DataFrame, None)
+    data_end_date_str 为数据截止的交易日，如 '2026-09-23'
     """
-    cache_file = os.path.join(CACHE_DIR, f"{code}_daily.csv")
-
-    # 尝试从缓存读取
-    if os.path.exists(cache_file):
-        try:
-            df = pd.read_csv(cache_file, parse_dates=["日期"])
-            if len(df) >= days * 0.8:  # 缓存数据足够
-                df = df.tail(days).reset_index(drop=True)
-                return df
-        except Exception:
-            pass
-
     # 使用akshare获取数据
-    end_date = datetime.now().strftime("%Y%m%d")
+    # 始终取到前一日，避免盘中数据不完整
+    yesterday = datetime.now() - timedelta(days=1)
+    end_date = yesterday.strftime("%Y%m%d")
     start_date = (datetime.now() - timedelta(days=days * 2)).strftime("%Y%m%d")
 
     try:
-        df = ak.fund_etf_hist(
-            symbol=code,
-            period="daily",
-            start_date=start_date,
-            end_date=end_date,
-            adjust=""
-        )
+        df = ak.stock_zh_index_daily(symbol=f"sh{code}" if code.startswith("5") else f"sz{code}")
     except Exception as e:
-        print(f"  [警告] {code} akshare获取失败: {e}, 尝试备用方法...")
-        try:
-            # 备用方法：使用stock_zh_index_daily
-            df = ak.stock_zh_index_daily(symbol=f"sh{code}" if code.startswith("5") else f"sz{code}")
-        except Exception as e2:
-            print(f"  [错误] {code} 备用方法也失败: {e2}")
-            return pd.DataFrame()
+        print(f"  [错误] {code} 数据获取失败: {e}")
+        return pd.DataFrame(), None
 
     if df is None or len(df) == 0:
         print(f"  [警告] {code} 未获取到数据")
-        return pd.DataFrame()
+        return pd.DataFrame(), None
 
     # 统一列名
     col_map = {}
@@ -149,15 +125,23 @@ def fetch_etf_data(code: str, days: int = 365 * 5) -> pd.DataFrame:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
     df = df[required_cols].dropna().reset_index(drop=True)
+
+    # 确保不包含今日数据（双重保险，防止备用接口返回盘中数据）
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    if len(df) > 0:
+        last_date = str(df["日期"].iloc[-1])
+        if today_str in last_date or last_date.startswith(today_str[:10]):
+            df = df.iloc[:-1].reset_index(drop=True)
+            print(f"  [提示] 已排除今日盘中数据，使用截至昨日的收盘数据")
+
     df = df.tail(days).reset_index(drop=True)
 
-    # 保存到缓存
-    try:
-        df.to_csv(cache_file, index=False)
-    except Exception:
-        pass
+    # 提取数据截止交易日
+    data_end_date = None
+    if len(df) > 0:
+        data_end_date = str(df["日期"].iloc[-1])[:10]
 
-    return df
+    return df, data_end_date
 
 
 def resample_to_period(df: pd.DataFrame, period: str) -> pd.DataFrame:
@@ -861,8 +845,10 @@ def get_signal(score: float) -> dict:
 # HTML报告生成
 # ============================================================
 
-def generate_html_report(results: list) -> str:
-    """生成自包含HTML报告，可部署到GitHub Pages"""
+def generate_html_report(results: list, lite: bool = False, data_dates: dict = None) -> str:
+    """生成自包含HTML报告
+    lite=True: 精简版，只含汇总表格，体积小
+    lite=False: 完整版，含每只ETF详细评分，体积大"""
     now = datetime.now()
     successful = [r for r in results if "error" not in r]
     error_list = [r for r in results if "error" in r]
@@ -911,6 +897,10 @@ def generate_html_report(results: list) -> str:
         .badge-strong-sell { background: rgba(82,196,26,0.15); color: #52c41a; border: 1px solid rgba(82,196,26,0.3); }
         .score-bar { display: inline-block; width: 50px; height: 6px; background: #2a2a4e; border-radius: 3px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
         .score-bar-fill { height: 100%; border-radius: 3px; }
+        .footer { text-align: center; padding: 30px 20px; color: #555; font-size: 13px; }
+    """
+    if not lite:
+        css += """
         .detail-card { background: #1a1a2e; border: 1px solid #2a2a4e; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
         .detail-card h3 { color: #e0e0e0; margin-bottom: 15px; font-size: 18px; }
         .detail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -924,9 +914,12 @@ def generate_html_report(results: list) -> str:
         .strategy-box { margin-top: 15px; padding-top: 15px; border-top: 1px solid #2a2a4e; }
         .strategy-box div { margin-bottom: 6px; font-size: 13px; }
         .strategy-box .label { color: #888; display: inline-block; width: 60px; }
-        .footer { text-align: center; padding: 30px 20px; color: #555; font-size: 13px; }
         @media (max-width: 768px) {
             .detail-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    """
+    css += """
+        @media (max-width: 768px) {
             .container { padding: 10px; }
             th, td { padding: 8px 6px; font-size: 12px; }
             .header { padding: 20px; }
@@ -1009,7 +1002,21 @@ def generate_html_report(results: list) -> str:
     meta_parts = [f"生成时间: {now.strftime('%Y-%m-%d %H:%M:%S')}", f"分析: {len(results)}只", f"成功: {len(successful)}只"]
     if error_list:
         meta_parts.append(f"错误: {len(error_list)}只")
+
+    # 显示数据截止交易日
+    if data_dates:
+        unique_dates = sorted(set(data_dates.values()))
+        if len(unique_dates) == 1:
+            meta_parts.append(f"数据截止: {unique_dates[0]}")
+        else:
+            meta_parts.append(f"数据截止: {unique_dates[-1]}~{unique_dates[0]}")
     meta_str = " | ".join(meta_parts)
+
+    # 精简版不含明细卡片，完整版包含
+    if lite:
+        detail_section = ""
+    else:
+        detail_section = f'<div class="detail">{details_html}{error_html}</div>'
 
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -1038,10 +1045,7 @@ def generate_html_report(results: list) -> str:
 {rows_html}
 </tbody>
 </table>
-<div class="detail">
-{details_html}
-{error_html}
-</div>
+{detail_section}
 <div class="footer">
 ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节奏 → 日K找买点<br>
 本报告仅供学习参考，不构成投资建议 | 生成于 {now.strftime('%Y-%m-%d %H:%M:%S')}
@@ -1050,28 +1054,37 @@ ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节�
 </body>
 </html>"""
 
+    if lite:
+        return html  # 精简版直接返回HTML字符串，不写文件
+
     html_file = os.path.join(REPORT_DIR, f"ETF四周期打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
     with open(html_file, "w", encoding="utf-8") as f:
         f.write(html)
-    return html_file
+    return html_file  # 完整版返回文件路径
 
 
 # ============================================================
 # 手机推送通知
 # ============================================================
 
-def send_notification(results: list):
-    """发送打分摘要到手机，支持Server酱/PushPlus/Bark/ntfy/自定义webhook"""
-    import urllib.request
-    import urllib.parse
+def send_notification(results: list, html_content: str = ""):
+    """发送完整HTML报告到邮箱，手机邮件App可直接查看"""
+    import ssl
+    import smtplib
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
 
-    push_type = os.environ.get("PUSH_TYPE", "").lower()
-    push_key = os.environ.get("PUSH_KEY", "")
-    push_url = os.environ.get("PUSH_URL", "")
+    # 邮件配置
+    smtp_host = os.environ.get("SMTP_HOST", "smtp.qq.com")
+    smtp_port = os.environ.get("SMTP_PORT", "465")
+    smtp_user = os.environ.get("SMTP_USER", "")
+    smtp_pass = os.environ.get("SMTP_PASS", "")
+    email_to = os.environ.get("EMAIL_TO", "")
 
-    if not push_type and not push_url:
-        print("未配置推送服务，跳过手机通知。")
-        print("如需推送，设置环境变量 PUSH_TYPE (serverchan/pushplus/bark/ntfy) 和 PUSH_KEY/PUSH_URL")
+    if not smtp_user or not smtp_pass or not email_to:
+        print("未配置邮件推送，跳过通知。")
+        print("如需推送，设置环境变量: SMTP_USER, SMTP_PASS, EMAIL_TO")
+        print("  QQ邮箱: SMTP_PASS为授权码（非登录密码）")
         return
 
     successful = [r for r in results if "error" not in r]
@@ -1080,65 +1093,68 @@ def send_notification(results: list):
 
     title = f"ETF四周期打分 {datetime.now().strftime('%m-%d')} | 买{len(buy)} 卖{len(sell)}"
 
-    lines = [
-        "ETF四周期量化打分报告",
-        f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
-        f"ETF: {len(successful)}/{len(results)}只成功",
-        "",
-        "==信号分布=="
-    ]
-    sig_order = ["强烈买入", "买入", "观望", "卖出", "强烈卖出"]
-    sig_counts = {}
-    for r in successful:
-        sig_counts[r["signal"]] = sig_counts.get(r["signal"], 0) + 1
-    for s in sig_order:
-        if s in sig_counts:
-            lines.append(f"  {s}: {sig_counts[s]}只")
-
-    if buy:
-        lines.append("\n==买入信号==")
-        for r in sorted(buy, key=lambda x: -x["composite_score"]):
-            lines.append(f"  {r['name']}({r['code']}): {r['composite_score']}分 {r['signal']}")
-
-    if sell:
-        lines.append("\n==卖出信号==")
-        for r in sorted(sell, key=lambda x: x["composite_score"]):
-            lines.append(f"  {r['name']}({r['code']}): {r['composite_score']}分 {r['signal']}")
-
-    content = "\n".join(lines)
+    # 创建SSL上下文，解决证书验证问题
+    try:
+        import certifi
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        try:
+            ssl_context = ssl.create_default_context()
+        except Exception:
+            ssl_context = ssl._create_unverified_context()
 
     try:
-        if push_type == "serverchan" and push_key:
-            url = f"https://sctapi.ftqq.com/{push_key}.send"
-            data = urllib.parse.urlencode({"title": title, "desp": content}).encode()
-            req = urllib.request.Request(url, data=data, method="POST")
-            urllib.request.urlopen(req, timeout=10)
-            print("Server酱推送成功")
-        elif push_type == "pushplus" and push_key:
-            url = "http://www.pushplus.plus/send"
-            data = json.dumps({"token": push_key, "title": title, "content": content, "template": "txt"}).encode()
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
-            urllib.request.urlopen(req, timeout=10)
-            print("PushPlus推送成功")
-        elif push_type == "bark" and push_key:
-            bark_server = os.environ.get("BARK_SERVER", "https://api.day.app")
-            url = f"{bark_server}/{push_key}"
-            data = json.dumps({"title": title, "body": content, "group": "ETF"}).encode()
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
-            urllib.request.urlopen(req, timeout=10)
-            print("Bark推送成功")
-        elif push_type == "ntfy" and push_url:
-            data = content.encode()
-            req = urllib.request.Request(push_url, data=data, headers={"Title": title, "Tags": "chart,money"}, method="POST")
-            urllib.request.urlopen(req, timeout=10)
-            print("ntfy推送成功")
-        elif push_url:
-            data = json.dumps({"title": title, "content": content}).encode()
-            req = urllib.request.Request(push_url, data=data, headers={"Content-Type": "application/json"}, method="POST")
-            urllib.request.urlopen(req, timeout=10)
-            print("Webhook推送成功")
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = title
+        msg["From"] = smtp_user
+        msg["To"] = email_to
+
+        # 纯文本备选
+        text_lines = [
+            "ETF四周期量化打分报告",
+            f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+            f"ETF: {len(successful)}/{len(results)}只成功",
+            "",
+            "==信号分布=="
+        ]
+        sig_order = ["强烈买入", "买入", "观望", "卖出", "强烈卖出"]
+        sig_counts = {}
+        for r in successful:
+            sig_counts[r["signal"]] = sig_counts.get(r["signal"], 0) + 1
+        for s in sig_order:
+            if s in sig_counts:
+                text_lines.append(f"  {s}: {sig_counts[s]}只")
+
+        if buy:
+            text_lines.append("\n==买入信号==")
+            for r in sorted(buy, key=lambda x: -x["composite_score"]):
+                text_lines.append(f"  {r['name']}({r['code']}): {r['composite_score']}分 {r['signal']}")
+
+        if sell:
+            text_lines.append("\n==卖出信号==")
+            for r in sorted(sell, key=lambda x: x["composite_score"]):
+                text_lines.append(f"  {r['name']}({r['code']}): {r['composite_score']}分 {r['signal']}")
+
+        msg.attach(MIMEText("\n".join(text_lines), "plain", "utf-8"))
+
+        # 完整HTML报告
+        if html_content:
+            msg.attach(MIMEText(html_content, "html", "utf-8"))
+
+        port = int(smtp_port)
+        if port == 465:
+            server = smtplib.SMTP_SSL(smtp_host, port, timeout=30, context=ssl_context)
+        else:
+            server = smtplib.SMTP(smtp_host, port, timeout=30)
+            server.starttls(context=ssl_context)
+        server.login(smtp_user, smtp_pass)
+        server.sendmail(smtp_user, email_to.split(","), msg.as_string())
+        server.quit()
+        print(f"邮件推送成功 → {email_to}")
     except Exception as e:
-        print(f"推送失败: {e}")
+        print(f"邮件推送失败: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 # ============================================================
@@ -1153,6 +1169,7 @@ def run_scoring():
     print("=" * 80)
 
     results = []
+    data_dates = {}
 
     for etf in ETF_LIST:
         code = etf["code"]
@@ -1162,7 +1179,7 @@ def run_scoring():
         print(f"正在分析: {name} ({code})")
 
         # 获取数据
-        df_daily = fetch_etf_data(code, days=365 * 5)
+        df_daily, data_end_date = fetch_etf_data(code, days=365 * 5)
 
         if len(df_daily) < 10:
             print(f"  [错误] {name} 数据不足({len(df_daily)}条)，跳过")
@@ -1175,6 +1192,9 @@ def run_scoring():
             })
             continue
 
+        if data_end_date:
+            data_dates[code] = data_end_date
+            print(f"  数据截止日: {data_end_date}")
         print(f"  日K数据: {len(df_daily)}条")
 
         # 四周期评分
@@ -1315,11 +1335,19 @@ def run_scoring():
     print(f"完整结果(含评分明细)已保存至: {output_file_full}")
 
     # 生成HTML报告
-    html_path = generate_html_report(results)
+    html_path = generate_html_report(results, data_dates=data_dates)
     print(f"HTML报告已保存至: {html_path}")
 
-    # 发送手机推送通知
-    send_notification(results)
+    # 读取HTML内容用于邮件推送
+    html_content = ""
+    try:
+        with open(html_path, "r", encoding="utf-8") as f:
+            html_content = f.read()
+    except Exception as e:
+        print(f"读取HTML报告失败: {e}")
+
+    # 发送手机推送通知（含HTML报告）
+    send_notification(results, html_content)
 
     return results
 

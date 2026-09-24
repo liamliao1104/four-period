@@ -28,12 +28,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: 运行ETF四周期打分
+      - name: 运行ETF打分
         env:
-          PUSH_TYPE: ${{ secrets.PUSH_TYPE }}
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          PUSH_URL: ${{ secrets.PUSH_URL }}
-          BARK_SERVER: ${{ secrets.BARK_SERVER }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
           python "four_period_local.py"
 
