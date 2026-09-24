@@ -1,6 +1,8 @@
 data_cache/
 output/*.json
 output/*.csv
+report/*.json
+report/*.csv
 __pycache__/
 *.pyc
 .env

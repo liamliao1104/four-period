@@ -37,13 +37,13 @@ jobs:
           PUSH_URL: ${{ secrets.PUSH_URL }}
           BARK_SERVER: ${{ secrets.BARK_SERVER }}
         run: |
-          python "ETF四周期量化打分系统.py"
+          python "four_period_local.py"
 
       - name: 部署报告到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output
+          publish_dir: ./report
           publish_branch: gh-pages
           keep_files: true
           user_name: 'github-actions[bot]'

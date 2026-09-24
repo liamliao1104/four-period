@@ -48,6 +48,10 @@ ETF_LIST = [
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# HTML报告目录
+REPORT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report")
+os.makedirs(REPORT_DIR, exist_ok=True)
+
 # 数据缓存目录
 CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_cache")
 os.makedirs(CACHE_DIR, exist_ok=True)
@@ -1046,10 +1050,10 @@ ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节�
 </body>
 </html>"""
 
-    html_file = os.path.join(OUTPUT_DIR, f"ETF打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
+    html_file = os.path.join(REPORT_DIR, f"ETF打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
     with open(html_file, "w", encoding="utf-8") as f:
         f.write(html)
-    index_file = os.path.join(OUTPUT_DIR, "index.html")
+    index_file = os.path.join(REPORT_DIR, "index.html")
     with open(index_file, "w", encoding="utf-8") as f:
         f.write(html)
     return html_file
@@ -1316,7 +1320,7 @@ def run_scoring():
     # 生成HTML报告
     html_path = generate_html_report(results)
     print(f"HTML报告已保存至: {html_path}")
-    print(f"GitHub Pages首页已更新: {os.path.join(OUTPUT_DIR, 'index.html')}")
+    print(f"GitHub Pages首页已更新: {os.path.join(REPORT_DIR, 'index.html')}")
 
     # 发送手机推送通知
     send_notification(results)
