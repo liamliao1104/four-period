@@ -4,7 +4,7 @@ on:
   schedule:
     # 每个交易日(周一至周五)北京时间15:30执行 (UTC 07:30)
     # 收盘后运行，确保当日数据完整
-    - cron: '30 7 * * 1-5'
+    - cron: '0 3 * * 1-5'
   workflow_dispatch:  # 支持手动触发
 
 permissions:
