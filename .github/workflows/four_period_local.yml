@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   scoring:
@@ -39,13 +37,10 @@ jobs:
         run: |
           python "four_period_local.py"
 
-      - name: 部署报告到GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./report
-          publish_branch: gh-pages
-          keep_files: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'ETF打分报告 ${{ github.run_id }}'
+      - name: 提交报告到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add report/
+          git commit -m "ETF打分报告 $(date +'%Y%m%d_%H%M%S')" || echo "无新报告需要提交"
+          git push

@@ -1053,9 +1053,6 @@ ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节�
     html_file = os.path.join(REPORT_DIR, f"ETF打分报告_{now.strftime('%Y%m%d_%H%M%S')}.html")
     with open(html_file, "w", encoding="utf-8") as f:
         f.write(html)
-    index_file = os.path.join(REPORT_DIR, "index.html")
-    with open(index_file, "w", encoding="utf-8") as f:
-        f.write(html)
     return html_file
 
 
@@ -1320,7 +1317,6 @@ def run_scoring():
     # 生成HTML报告
     html_path = generate_html_report(results)
     print(f"HTML报告已保存至: {html_path}")
-    print(f"GitHub Pages首页已更新: {os.path.join(REPORT_DIR, 'index.html')}")
 
     # 发送手机推送通知
     send_notification(results)
