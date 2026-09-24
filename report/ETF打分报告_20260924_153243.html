@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF四周期量化打分报告 - 2026-09-24</title>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f1117; color: #e0e0e0; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; padding: 30px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #2a2a4e; }
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header .meta { font-size: 14px; opacity: 0.7; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .card { background: #1a1a2e; border: 1px solid #2a2a4e; border-radius: 10px; padding: 20px; text-align: center; }
+        .card .label { font-size: 13px; color: #888; margin-bottom: 8px; }
+        .card .value { font-size: 28px; font-weight: 700; }
+        table { width: 100%; border-collapse: collapse; background: #1a1a2e; border-radius: 10px; overflow: hidden; border: 1px solid #2a2a4e; margin-bottom: 25px; }
+        th { background: #16213e; padding: 14px 12px; text-align: left; font-size: 13px; color: #aaa; border-bottom: 1px solid #2a2a4e; white-space: nowrap; }
+        td { padding: 14px 12px; border-bottom: 1px solid #2a2a4e; font-size: 14px; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #1f1f3a; }
+        .score { font-weight: 700; font-size: 16px; }
+        .score-high { color: #ff4d4f; }
+        .score-mid { color: #faad14; }
+        .score-low { color: #52c41a; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+        .badge-strong-buy { background: rgba(255,77,79,0.15); color: #ff4d4f; border: 1px solid rgba(255,77,79,0.3); }
+        .badge-buy { background: rgba(255,120,120,0.1); color: #ff7875; border: 1px solid rgba(255,120,120,0.2); }
+        .badge-watch { background: rgba(250,173,20,0.1); color: #faad14; border: 1px solid rgba(250,173,20,0.2); }
+        .badge-sell { background: rgba(82,196,26,0.1); color: #73d13d; border: 1px solid rgba(82,196,26,0.2); }
+        .badge-strong-sell { background: rgba(82,196,26,0.15); color: #52c41a; border: 1px solid rgba(82,196,26,0.3); }
+        .score-bar { display: inline-block; width: 50px; height: 6px; background: #2a2a4e; border-radius: 3px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+        .score-bar-fill { height: 100%; border-radius: 3px; }
+        .detail-card { background: #1a1a2e; border: 1px solid #2a2a4e; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+        .detail-card h3 { color: #e0e0e0; margin-bottom: 15px; font-size: 18px; }
+        .detail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .period-box { background: #16213e; border: 1px solid #2a2a4e; border-radius: 8px; padding: 15px; }
+        .period-box h4 { color: #aaa; font-size: 13px; margin-bottom: 8px; }
+        .period-box .period-score { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+        .period-box .item { margin-bottom: 8px; font-size: 13px; }
+        .period-box .item-name { color: #888; }
+        .period-box .item-score { font-weight: 600; }
+        .period-box .item-desc { color: #666; font-size: 12px; margin-top: 2px; }
+        .strategy-box { margin-top: 15px; padding-top: 15px; border-top: 1px solid #2a2a4e; }
+        .strategy-box div { margin-bottom: 6px; font-size: 13px; }
+        .strategy-box .label { color: #888; display: inline-block; width: 60px; }
+        .footer { text-align: center; padding: 30px 20px; color: #555; font-size: 13px; }
+        @media (max-width: 768px) {
+            .detail-grid { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 10px; }
+            th, td { padding: 8px 6px; font-size: 12px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 20px; }
+        }
+    
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>ETF四周期量化打分报告</h1>
+<div class="meta">生成时间: 2026-09-24 15:32:43 | 分析: 15只 | 成功: 15只</div>
+</div>
+<div class="summary">
+<div class="card"><div class="label">强烈买入</div><div class="value">0</div></div>
+<div class="card"><div class="label">买入</div><div class="value">0</div></div>
+<div class="card"><div class="label">观望</div><div class="value">2</div></div>
+<div class="card"><div class="label">卖出</div><div class="value">4</div></div>
+<div class="card"><div class="label">强烈卖出</div><div class="value">9</div></div>
+</div>
+<table>
+<thead>
+<tr><th>#</th><th>代码</th><th>名称</th><th>收盘价</th><th>年K</th><th>月K</th><th>周K</th><th>日K</th><th>综合</th><th>信号</th><th>仓位</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>159941</td>
+<td>纳指ETF广发</td>
+<td>1.728</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:44%;background:#ff4d4f"></span></span>11/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:100%;background:#ff4d4f"></span></span>20/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:60%;background:#ff4d4f"></span></span>18/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:72%;background:#ff4d4f"></span></span>18/25</td>
+<td><span class="score score-mid">67.0</span></td>
+<td><span class="badge badge-watch">观望</span></td>
+<td>轻仓试错(10%-30%)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>513500</td>
+<td>标普500ETF博时</td>
+<td>2.723</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:100%;background:#ff4d4f"></span></span>20/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:70%;background:#ff4d4f"></span></span>21/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:52%;background:#ff4d4f"></span></span>13/25</td>
+<td><span class="score score-mid">62.0</span></td>
+<td><span class="badge badge-watch">观望</span></td>
+<td>轻仓试错(10%-30%)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>513520</td>
+<td>日经ETF华夏</td>
+<td>2.342</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:100%;background:#ff4d4f"></span></span>20/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:43%;background:#ff4d4f"></span></span>13/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:52%;background:#ff4d4f"></span></span>13/25</td>
+<td><span class="score score-low">54.0</span></td>
+<td><span class="badge badge-sell">卖出</span></td>
+<td>减仓(降至10%以下)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>159985</td>
+<td>豆粕ETF华夏</td>
+<td>2.304</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:75%;background:#ff4d4f"></span></span>15/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:70%;background:#ff4d4f"></span></span>21/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">44.0</span></td>
+<td><span class="badge badge-sell">卖出</span></td>
+<td>减仓(降至10%以下)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>159981</td>
+<td>建信能源化工期货ETF</td>
+<td>1.678</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:100%;background:#ff4d4f"></span></span>20/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:70%;background:#ff4d4f"></span></span>21/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:20%;background:#52c41a"></span></span>-5/25</td>
+<td><span class="score score-low">44.0</span></td>
+<td><span class="badge badge-sell">卖出</span></td>
+<td>减仓(降至10%以下)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>588000</td>
+<td>科创50ETF</td>
+<td>1.755</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:75%;background:#ff4d4f"></span></span>15/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:43%;background:#ff4d4f"></span></span>13/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score score-low">44.0</span></td>
+<td><span class="badge badge-sell">卖出</span></td>
+<td>减仓(降至10%以下)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>513350</td>
+<td>标普油气ETF富国</td>
+<td>1.294</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:64%;background:#ff4d4f"></span></span>16/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:75%;background:#ff4d4f"></span></span>15/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:53%;background:#ff4d4f"></span></span>16/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:60%;background:#52c41a"></span></span>-15/25</td>
+<td><span class="score score-low">32.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>159980</td>
+<td>有色ETF大成</td>
+<td>2.162</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:50%;background:#ff4d4f"></span></span>10/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:43%;background:#ff4d4f"></span></span>13/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">31.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>159920</td>
+<td>恒生ETF华夏</td>
+<td>1.460</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:64%;background:#ff4d4f"></span></span>16/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:37%;background:#ff4d4f"></span></span>11/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">27.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>159915</td>
+<td>创业板ETF易方达</td>
+<td>3.399</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:75%;background:#ff4d4f"></span></span>15/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:13%;background:#52c41a"></span></span>-4/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score score-low">27.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>512890</td>
+<td>红利低波ETF华泰柏瑞</td>
+<td>1.182</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:64%;background:#ff4d4f"></span></span>16/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:53%;background:#ff4d4f"></span></span>16/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:20%;background:#52c41a"></span></span>-5/25</td>
+<td><span class="score score-low">27.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>159201</td>
+<td>自由现金流ETF</td>
+<td>1.156</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:44%;background:#ff4d4f"></span></span>11/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:25%;background:#ff4d4f"></span></span>5/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:37%;background:#ff4d4f"></span></span>11/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">27.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>518880</td>
+<td>黄金ETF华安</td>
+<td>8.897</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:25%;background:#ff4d4f"></span></span>5/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:37%;background:#ff4d4f"></span></span>11/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">24.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>513030</td>
+<td>德国ETF华安</td>
+<td>1.836</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:53%;background:#ff4d4f"></span></span>16/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:0%;background:#555"></span></span>0/25</td>
+<td><span class="score score-low">24.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>513180</td>
+<td>恒生科技ETF</td>
+<td>0.552</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:16%;background:#52c41a"></span></span>-4/25</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:100%;background:#52c41a"></span></span>-20/20</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:13%;background:#52c41a"></span></span>-4/30</td>
+<td><span class="score-bar"><span class="score-bar-fill" style="width:32%;background:#ff4d4f"></span></span>8/25</td>
+<td><span class="score score-low">-20.0</span></td>
+<td><span class="badge badge-strong-sell">强烈卖出</span></td>
+<td>清仓(0%)</td>
+</tr>
+</tbody>
+</table>
+<div class="detail">
+<div class="detail-card">
+<h3>纳指ETF广发 (159941) <span class="badge badge-watch">观望</span> <span class="score score-mid">67.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">11/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.73)在20年线(1.71)附近缠绕，长期趋势不明</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">价格处于历史中性区(57%分位)，估值合理</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">20/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.73)站稳20月线(1.38)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">连续三根上涨月线(红三兵)，底部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">18/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.73)站稳20周线(1.64)上方，中期趋势健康</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">周线MACD在零轴上方但死叉，注意回调</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">18/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.73)站稳20日线(1.66)上方，短期强势</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">MACD和KDJ均偏多，短线看涨</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>轻仓试错(10%-30%)</div>
+<div><span class="label">策略</span>部分周期信号矛盾，小仓位试探</div>
+<div><span class="label">风控</span>严格止损，破位即离场</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>标普500ETF博时 (513500) <span class="badge badge-watch">观望</span> <span class="score score-mid">62.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.72)站稳20年线(2.18)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(86%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">20/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.72)站稳20月线(2.32)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">连续三根上涨月线(红三兵)，底部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">21/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.72)站稳20周线(2.59)上方，中期趋势健康</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">13/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(2.72)在20日线(2.68)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">MACD和KDJ均偏多，短线看涨</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>轻仓试错(10%-30%)</div>
+<div><span class="label">策略</span>部分周期信号矛盾，小仓位试探</div>
+<div><span class="label">风控</span>严格止损，破位即离场</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>日经ETF华夏 (513520) <span class="badge badge-sell">卖出</span> <span class="score score-low">54.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.34)站稳20年线(1.44)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">20/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.34)站稳20月线(1.85)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">连续三根上涨月线(红三兵)，底部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">13/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(2.34)在20周线(2.29)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">周线MACD在零轴上方但死叉，注意回调</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">13/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.34)站稳20日线(2.27)上方，短期强势</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">指标中性徘徊，短线方向不明</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>减仓(降至10%以下)</div>
+<div><span class="label">策略</span>多周期发出走弱信号，应减仓或离场</div>
+<div><span class="label">风控</span>不要抄底，等待明确信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>豆粕ETF华夏 (159985) <span class="badge badge-sell">卖出</span> <span class="score score-low">44.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.30)站稳20年线(1.72)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">15/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.30)站稳20月线(2.02)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显形态信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">21/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.30)站稳20周线(2.15)上方，中期趋势健康</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.7倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(2.30)在20日线(2.34)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>减仓(降至10%以下)</div>
+<div><span class="label">策略</span>多周期发出走弱信号，应减仓或离场</div>
+<div><span class="label">风控</span>不要抄底，等待明确信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>建信能源化工期货ETF (159981) <span class="badge badge-sell">卖出</span> <span class="score score-low">44.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.68)站稳20年线(1.43)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">20/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.68)站稳20月线(1.41)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">连续三根上涨月线(红三兵)，底部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">21/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.68)站稳20周线(1.57)上方，中期趋势健康</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">-5/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.68)在20日线(1.71)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">MACD和KDJ同时发出死叉信号，短线离场</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>减仓(降至10%以下)</div>
+<div><span class="label">策略</span>多周期发出走弱信号，应减仓或离场</div>
+<div><span class="label">风控</span>不要抄底，等待明确信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>科创50ETF (588000) <span class="badge badge-sell">卖出</span> <span class="score score-low">44.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.75)站稳20年线(1.29)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">15/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.75)站稳20月线(1.47)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显底部或顶部形态</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">13/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.75)在20周线(1.84)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">周线MACD在零轴上方但死叉，注意回调</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.5倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.75)在20日线(1.71)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">指标中性徘徊，短线方向不明</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>减仓(降至10%以下)</div>
+<div><span class="label">策略</span>多周期发出走弱信号，应减仓或离场</div>
+<div><span class="label">风控</span>不要抄底，等待明确信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>标普油气ETF富国 (513350) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">32.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">16/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.29)站稳20年线(1.06)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">年K数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据不足，无法计算分位</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">15/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.29)站稳20月线(1.08)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显形态信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">16/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.29)在20周线(1.25)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">-15/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">股价(1.29)跌破20日线(1.38)，短期弱势</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>有色ETF大成 (159980) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">31.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.16)站稳20年线(1.57)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">10/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(2.16)站稳20月线(1.91)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">月线出现双顶形态，警惕顶部风险</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">13/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(2.16)在20周线(2.13)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">周线MACD在零轴上方但死叉，注意回调</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.5倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(2.16)在20日线(2.16)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>恒生ETF华夏 (159920) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">27.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">16/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.46)站稳20年线(1.32)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">价格处于历史中性区(71%分位)，估值合理</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">0/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.46)在20月线(1.51)附近争夺，方向待定</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">月线均线纠缠震荡，无明确趋势</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">连续三根下跌月线(三只乌鸦)，顶部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">11/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.46)在20周线(1.47)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">周线MACD在零轴附近缠绕，中期动能不明</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.4倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.46)在20日线(1.48)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>创业板ETF易方达 (159915) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">27.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(3.40)站稳20年线(2.58)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(100%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">15/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(3.40)站稳20月线(3.01)上方，中长期强势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">月线均线多头排列，中期趋势向上</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显底部或顶部形态</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">-4/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">股价(3.40)跌破20周线(3.71)，中期趋势走弱</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">周线MACD在零轴附近缠绕，中期动能不明</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.5倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(3.40)在20日线(3.37)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">指标中性徘徊，短线方向不明</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>红利低波ETF华泰柏瑞 (512890) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">27.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">16/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.18)站稳20年线(1.07)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">价格处于历史中性区(71%分位)，估值合理</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">0/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.18)在20月线(1.16)附近争夺，方向待定</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">月线均线纠缠震荡，无明确趋势</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">连续三根下跌月线(三只乌鸦)，顶部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">16/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.18)在20周线(1.16)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.4倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">-5/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.18)在20日线(1.20)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">MACD和KDJ同时发出死叉信号，短线离场</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>自由现金流ETF (159201) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">27.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">11/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">年K数据不足，无法判断</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">年K数据不足，无法判断</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">估值数据不可用，使用价格分位替代</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">5/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.16)在20月线(1.15)附近争夺，方向待定</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">月线均线纠缠震荡，无明确趋势</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显形态信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">11/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.16)在20周线(1.17)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">周线MACD在零轴附近缠绕，中期动能不明</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.5倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.16)在20日线(1.18)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>黄金ETF华安 (518880) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">24.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(8.90)站稳20年线(5.45)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(86%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">5/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(8.90)在20月线(8.58)附近争夺，方向待定</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">月线均线纠缠震荡，无明确趋势</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显形态信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">11/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(8.90)在20周线(8.93)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">周线MACD在零轴附近缠绕，中期动能不明</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">量价关系中性</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(8.90)在20日线(9.03)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>德国ETF华安 (513030) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">24.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">10</span><div class="item-desc">股价(1.84)站稳20年线(1.36)上方，长期牛市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">价格处于历史高位(86%分位)，注意风险</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">0/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.84)在20月线(1.83)附近争夺，方向待定</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">月线均线纠缠震荡，无明确趋势</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">月线出现双顶形态，警惕顶部风险</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">16/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.84)在20周线(1.82)附近，中期震荡</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">8</span><div class="item-desc">周线MACD在零轴上方运行，中期偏多</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.3倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">0/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(1.84)在20日线(1.86)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">MACD或KDJ发出死叉信号，短线注意风险</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+<div class="detail-card">
+<h3>恒生科技ETF (513180) <span class="badge badge-strong-sell">强烈卖出</span> <span class="score score-low">-20.0分</span></h3>
+<div class="detail-grid">
+<div class="period-box"><h4>年K</h4><div class="period-score">-4/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">股价(0.55)在20年线(0.61)下方，长期熊市格局</div></div><div class="item"><span class="item-name">趋势形态</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">数据点不足，横盘震荡</div></div><div class="item"><span class="item-name">估值分位</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">价格处于历史中性区(40%分位)，估值合理</div></div></div><div class="period-box"><h4>月K</h4><div class="period-score">-20/20</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">股价(0.55)在20月线(0.69)下方，中长期弱势</div></div><div class="item"><span class="item-name">趋势排列</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">月线均线空头排列，中期趋势向下</div></div><div class="item"><span class="item-name">形态信号</span> <span class="item-score" style="color:#52c41a">-5</span><div class="item-desc">连续三根下跌月线(三只乌鸦)，顶部信号</div></div></div><div class="period-box"><h4>周K</h4><div class="period-score">-4/30</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#52c41a">-10</span><div class="item-desc">股价(0.55)跌破20周线(0.59)，中期趋势走弱</div></div><div class="item"><span class="item-name">MACD信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">周线MACD在零轴附近缠绕，中期动能不明</div></div><div class="item"><span class="item-name">量价配合</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">缩量(0.4倍)震荡整理，多空平衡</div></div></div><div class="period-box"><h4>日K</h4><div class="period-score">8/25</div><div class="item"><span class="item-name">均线位置</span> <span class="item-score" style="color:#ff4d4f">5</span><div class="item-desc">股价(0.55)在20日线(0.56)附近，短期方向不明</div></div><div class="item"><span class="item-name">指标信号</span> <span class="item-score" style="color:#ff4d4f">3</span><div class="item-desc">指标中性徘徊，短线方向不明</div></div><div class="item"><span class="item-name">K线形态</span> <span class="item-score" style="color:#888">0</span><div class="item-desc">无明显看涨或看跌形态</div></div></div>
+</div>
+<div class="strategy-box">
+<div><span class="label">仓位</span>清仓(0%)</div>
+<div><span class="label">策略</span>多周期共振向下，全面回避</div>
+<div><span class="label">风控</span>不逆势抄底，等待底部信号</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+ETF四周期量化打分系统 | 年K定战略 → 月K定方向 → 周K定节奏 → 日K找买点<br>
+本报告仅供学习参考，不构成投资建议 | 生成于 2026-09-24 15:32:43
+</div>
+</div>
+</body>
+</html>
